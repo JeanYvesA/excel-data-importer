@@ -13,7 +13,6 @@ namespace ExcelDataImporterProject.Models
     /// </summary>
     class MyDbContext : DbContext
     {
-        const string connectionString = "server=localhost;database=excel;user=root;";
         public DbSet<Person> Persons { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
