@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace ExcelDataImporterProject.Models
 {
@@ -16,7 +17,14 @@ namespace ExcelDataImporterProject.Models
         public DbSet<Person> Persons { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "server=localhost;database=excel;user=root;";
+            // Charge la configuration depuis appsettings.json
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()) // Récupère le dossier de base
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Charge le fichier JSON
+                .Build();
+
+            // Lire la chaîne de connexion
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
             var serverVersion = ServerVersion.AutoDetect(connectionString);
             optionsBuilder.UseMySql(connectionString, serverVersion);
         }
