@@ -24,7 +24,7 @@ namespace ExcelDataImporterProject.Models
                 .Build();
 
             // Lire la chaîne de connexion
-            string connectionString = configuration.GetConnectionString("DefaultConnection");
+            string? connectionString = configuration.GetConnectionString("DefaultConnection");
             var serverVersion = ServerVersion.AutoDetect(connectionString);
             optionsBuilder.UseMySql(connectionString, serverVersion);
         }
